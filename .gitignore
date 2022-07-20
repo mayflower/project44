@@ -1,0 +1,4 @@
+.terraform*
+/frontend/project-44/node_modules
+.idea
+builds/
