@@ -1,0 +1,95 @@
+[
+  {
+    "betId": "xxxx-xxx1",
+    "title": "My Bet",
+    "description": "Rainy tomorrow",
+    "criteria": ["Rainy Tomorrow"],
+    "expirationTime": "2022-05-23",
+    "creator": {
+      "userId": "xxxx-x10",
+      "nickname": "Xedon",
+      "mail": "emanuel.vollmer@mayflower.de"
+    },
+    "minimumWager": 100,
+    "isWagerSelectable": false,
+    "isPublic": true,
+    "competitors": [
+      {
+        "userId": "xxxx-x13",
+        "nickname": "Thomas",
+        "mail": "thomas.schindler@mayflower.de",
+        "wager": 100
+      },
+      {
+        "userId": "xxxx-x10",
+        "nickname": "Xedon",
+        "mail": "emanuel.vollmer@mayflower.de",
+        "wager": 100
+      },
+      {
+        "userId": "xxxx-x22",
+        "nickname": "Mare",
+        "mail": "maria.walzl@mayflower.de",
+        "wager": 100
+      }
+    ]
+  },
+  {
+    "betId": "xxxx-x2",
+    "title": "My Bet 2",
+    "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.",
+    "criteria": ["Rainy Tomorrow", "sunny", "snowy"],
+    "expirationTime": "2022-10-23",
+    "creator": {
+      "userId": "xxxx-x22",
+      "nickname": "Mare",
+      "mail": "maria.walzl@mayflower.de"
+    },
+    "minimumWager": 200,
+    "isWagerSelectable": true,
+    "isPublic": true,
+    "competitors": [
+      {
+        "userId": "xxxx-x13",
+        "nickname": "Thomas",
+        "mail": "thomas.schindler@mayflower.de",
+        "wager": 200
+      },
+      {
+        "userId": "xxxx-x10",
+        "nickname": "Xedon",
+        "mail": "emanuel.vollmer@mayflower.de",
+        "wager": 300
+      }
+    ]
+  },
+  {
+    "betId": "xxxx-xxx3",
+    "title": "My Bet 3",
+    "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.",
+    "criteria": ["Rainy Tomorrow", "sunny", "snowy", "others"],
+    "expirationTime": "2022-08-15",
+    "creator": {
+      "userId": "xxxx-x10",
+      "nickname": "Xedon",
+      "mail": "emanuel.vollmer@mayflower.de"
+    },
+    "minimumWager": 40,
+    "isWagerSelectable": false,
+    "isPublic": true,
+    "competitors": [
+      {
+        "userId": "xxxx-x13",
+        "nickname": "Thomas",
+        "mail": "thomas.schindler@mayflower.de",
+        "wager": 40
+      },
+      {
+        "userId": "xxxx-x10",
+        "nickname": "Xedon",
+        "mail": "emanuel.vollmer@mayflower.de",
+        "wager": 40
+      }
+    ]
+  }
+]

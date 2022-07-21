@@ -1,0 +1,134 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: "Bets Lambdas"
+
+Parameters:
+  TABLENAME:
+    Type: String
+    Description: The DynamoDB table for storing information.
+    Default: 'Bets'
+  LOCAL:
+    Type: Bool
+    Description: Only relevant for local development
+    Default: true
+  
+
+Resources:
+  BetTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref TABLENAME
+      AttributeDefinitions:
+        - AttributeName: Id
+          AttributeType: S
+      KeySchema: 
+        - AttributeName: Id
+          KeyType: HASH
+      ProvisionedThroughput: 
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+  createBet:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Runtime: nodejs16.x
+      Handler: index.handler
+      CodeUri: ./createBet/build
+      MemorySize: 128
+      Timeout: 300
+      Description: 'Lambda to create new bets'
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLENAME: !Ref TABLENAME
+          LOCAL: !Ref LOCAL
+      Events:
+        createBet:
+          Type: Api
+          Properties:
+            Path: /bet
+            Method: POST
+  fetchBets:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Runtime: nodejs16.x
+      Handler: index.handler
+      CodeUri: ./fetchBets/build
+      MemorySize: 128
+      Timeout: 300
+      Description: 'Lambda to get bets'
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLENAME: !Ref TABLENAME
+          LOCAL: !Ref LOCAL
+      Events:
+        createBet:
+          Type: Api
+          Properties:
+            Path: /bet
+            Method: GET
+  fetchBet:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Runtime: nodejs16.x
+      Handler: index.handler
+      CodeUri: ./fetchBet/build
+      MemorySize: 128
+      Timeout: 300
+      Description: 'Lambda to get bet'
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLENAME: !Ref TABLENAME
+          LOCAL: !Ref LOCAL
+      Events:
+        createBet:
+          Type: Api
+          Properties:
+            Path: /bet/{betId}
+            Method: GET
+  updateBet:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Runtime: nodejs16.x
+      Handler: index.handler
+      CodeUri: ./updateBet/build
+      MemorySize: 128
+      Timeout: 300
+      Description: 'Lambda to update bet'
+      Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          TABLENAME: !Ref TABLENAME
+          LOCAL: !Ref LOCAL
+      Events:
+        createBet:
+          Type: Api
+          Properties:
+            Path: /bet/{betId}
+            Method: PUT
+# Uncomment if you develop deleteBet
+#  deleteBet:
+#    Type: "AWS::Serverless::Function"
+#    Properties:
+#      Runtime: nodejs16.x
+#      Handler: index.handler
+#      CodeUri: ./deleteBet/build
+#      MemorySize: 128
+#      Timeout: 300
+#      Description: 'Lambda to delete bet'
+#      Policies: AmazonDynamoDBFullAccess
+#      Environment:
+#        Variables:
+#          TABLENAME: !Ref TABLENAME
+#          LOCAL: !Ref LOCAL
+#      Events:
+#        createBet:
+#          Type: Api
+#          Properties:
+#            Path: /bet/{betId}
+#            Method: DELETE

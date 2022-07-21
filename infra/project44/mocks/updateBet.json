@@ -1,0 +1,35 @@
+{
+  "betId": "xxxx-xxx1",
+  "title": "My Bet",
+  "description": "Rainy tomorrow",
+  "criteria": ["Rainy Tomorrow"],
+  "expirationTime": "2022-05-23",
+  "creator": {
+    "userId": "xxxx-x10",
+    "nickname": "Xedon",
+    "mail": "emanuel.vollmer@mayflower.de"
+  },
+  "minimumWager": 100,
+  "isWagerSelectable": false,
+  "isPublic": true,
+  "competitors": [
+    {
+      "userId": "xxxx-x13",
+      "nickname": "Thomas",
+      "mail": "thomas.schindler@mayflower.de",
+      "wager": 100
+    },
+    {
+      "userId": "xxxx-x10",
+      "nickname": "Xedon",
+      "mail": "emanuel.vollmer@mayflower.de",
+      "wager": 100
+    },
+    {
+      "userId": "xxxx-x22",
+      "nickname": "Mare",
+      "mail": "maria.walzl@mayflower.de",
+      "wager": 100
+    }
+  ]
+}

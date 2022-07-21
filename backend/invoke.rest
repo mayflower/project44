@@ -1,0 +1,126 @@
+### Bet sainy tomorrow
+
+POST http://localhost:3000/bet/
+
+{
+  "title": "My Bet",
+  "description": "Rainy tomorrow",
+  "criteria": [
+    "Rainy tomorrow" 
+  ],
+  "expirationTime": "2022-05-23",
+  "creator": {
+    "nickname": "Xedon",
+    "mail": "emanuel.vollmer@mayflower.de"
+  },
+  "minimumWager": 100,
+  "isPublic": true,
+  "competitors": [
+    { 
+      "nickname": "Thomas",
+      "mail": "thomas.schindler@mayflower.de",
+      "wager": 101
+    },
+    {
+      "nickname": "Xedon",
+      "mail": "emanuel.vollmer@mayflower.de",
+      "wager": 101
+    }
+  ]
+}
+
+### Bet sunny tomorrow
+
+POST http://localhost:3000/bet/
+
+{
+  "description": "Sunny tomorrow",
+  "criteria": [
+    "Sunny tomorrow" 
+  ],
+  "expirationTime": "2022-05-23",
+  "creator": {
+      "nickname": "Thomas",
+      "mail": "thomas.schindler@mayflower.de"
+  },
+  "minimumWager": 100,
+  "isPublic": true,
+  "competitors": [
+    {
+      "nickname": "Thomas",
+      "mail": "thomas.schindler@mayflower.de",
+      "wager": 101
+    },
+    {
+      "nickname": "Xedon",
+      "mail": "emanuel.vollmer@mayflower.de",
+      "wager": 101
+    }
+  ]
+}
+
+### Get Bet
+GET http://localhost:3000/bet/a32508ac-04ec-5a44-83fd-4282b064909b
+
+### Query all
+GET http://localhost:3000/bet/
+
+### Query by creatorId
+GET http://localhost:3000/bet/?creatorId=a7eba72b-0f06-5eeb-a114-3f68d8425abd
+
+### Query by competitorId
+GET http://localhost:3000/bet/?competitorId=8b2662d9-4f3e-5f7a-b744-b650a86a244e
+
+
+### Query by creatorMail
+GET http://localhost:3000/bet/?creatorMail=emanuel.vollmer@mayflower.de
+
+
+### Query by competitorMail
+GET http://localhost:3000/bet/?competitorMail=thomas.schindler@mayflower.de
+
+### Query by competitorMail
+GET http://localhost:3000/bet/?competitorMail=emanuel.vollmer@mayflower.de
+
+
+### Query by creatorMail
+GET http://localhost:3000/bet/?creatorMail=thomas.schindler@mayflower.de
+
+### Update Bet
+PUT http://localhost:3000/bet/a32508ac-04ec-5a44-83fd-4282b064909b
+
+{
+  "creator": {
+    "nickname": "Xedon",
+    "mail": "emanuel.vollmer@mayflower.de",
+    "userId": "a7eba72b-0f06-5eeb-a114-3f68d8425abd"
+  },
+  "competitors": [
+    {
+      "nickname": "Thomas",
+      "wager": 101,
+      "mail": "thomas.schindler@mayflower.de",
+      "userId": "8b2662d9-4f3e-5f7a-b744-b650a86a244e"
+    },
+    {
+      "nickname": "Xedon",
+      "wager": 101,
+      "mail": "emanuel.vollmer@mayflower.de",
+      "userId": "a7eba72b-0f06-5eeb-a114-3f68d8425abd"
+    },
+    {
+      "nickname": "Pati",
+      "wager": 101,
+      "mail": "patrick.shaikh@mayflower.de"
+    }
+  ],
+  "criteria": [
+    "Rainy tomorrow" 
+  ],
+  "expirationTime": "2022-05-23",
+  "betId": "a32508ac-04ec-5a44-83fd-4282b064909b",
+  "description": "Rainy tomorrow",
+  "isPublic": true,
+  "title": "My Bet test",
+  "minimumWager": 100
+}

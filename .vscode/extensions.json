@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "humao.rest-client",
+    "redhat.vscode-yaml",
+    "esbenp.prettier-vscode"
+  ]
+}

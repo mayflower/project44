@@ -1,0 +1,469 @@
+{
+  "components": {
+    "schemas": {
+      "bet": {
+        "type": "object",
+        "properties": {
+          "betId": {
+            "description": "ID of this bet",
+            "type": "string",
+            "readOnly": true
+          },
+          "status": {
+            "description": "a bet is either OPEN (editable), FROZEN (not editable) or OVER",
+            "enum": ["OPEN", "FROZEN", "OVER"],
+            "type": "string"
+          },
+          "title": {
+            "description": "title of this bet",
+            "type": "string"
+          },
+          "description": {
+            "description": "description of this bet",
+            "type": "string"
+          },
+          "criteria": {
+            "description": "list of criteriaOptions of this bet; must be at least one option",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/criteriaOption"
+            }
+          },
+          "expirationTime": {
+            "description": "the time on which the bet closes automatically (optinal)",
+            "type": "string"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/user"
+          },
+          "minimumWager": {
+            "description": "minimumWager for this bet",
+            "format": "float",
+            "type": "number"
+          },
+          "gain": {
+            "description": "total gain of this bet",
+            "format": "float",
+            "type": "number"
+          },
+          "competitors": {
+            "description": "list of competitors of this bet",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/competitor"
+            }
+          }
+        }
+      },
+      "competitor": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/user"
+          },
+          {
+            "type": "object",
+            "required": ["wager"],
+            "properties": {
+              "wager": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "user": {
+        "type": "object",
+        "required": ["nickname", "mail"],
+        "properties": {
+          "userId": {
+            "description": "ID of the user",
+            "type": "string",
+            "readOnly": true
+          },
+          "nickname": {
+            "description": "name of the user",
+            "type": "string"
+          },
+          "mail": {
+            "description": "mail of the user",
+            "type": "string"
+          }
+        }
+      },
+      "criteriaOption": {
+        "type": "object",
+        "properties": {
+          "criteriaTitle": {
+            "description": "title of the criteria",
+            "type": "string"
+          },
+          "criteriaDescription": {
+            "description": "description of the criteria",
+            "type": "string"
+          }
+        }
+      },
+      "arrayOfBets": {
+        "title": "BetsArray Schema",
+        "type": "object",
+        "properties": {
+          "bets": {
+            "description": "list of bets",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/bet"
+            }
+          }
+        }
+      },
+      "newBet": {
+        "title": "NewBet Schema",
+        "required": ["criteria", "status", "title"],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "title of this bet"
+          },
+          "description": {
+            "description": "description of this bet",
+            "type": "string"
+          },
+          "criteria": {
+            "description": "criteria-options of this bet; must be at least one criteria",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/criteriaOption"
+            }
+          },
+          "expirationTime": {
+            "description": "the time on which the bet closes automatically (optinal)",
+            "type": "string"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/user"
+          },
+          "minimumWager": {
+            "type": "number",
+            "description": "minimumWager for this bet",
+            "format": "float"
+          },
+          "competitors": {
+            "type": "array",
+            "description": "list of competitors of this bet",
+            "items": {
+              "$ref": "#/components/schemas/competitor"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "betId": {
+        "name": "betId",
+        "in": "path",
+        "required": true,
+        "description": "betId",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "Success": {
+        "content": {},
+        "description": "operation successful"
+      },
+      "BetSuccess": {
+        "description": "operation successful",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/bet"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "content": {},
+        "description": "the specified resource was not found"
+      }
+    }
+  },
+  "info": {
+    "description": "Contract API for project44.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "title": "Project44",
+    "version": "1.0.0"
+  },
+  "openapi": "3.0.1",
+  "paths": {
+    "/bet": {
+      "post": {
+        "operationId": "addBet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/newBet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/BetSuccess"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "x-amazon-apigateway-integration": ${createBetBinding},
+        "summary": "add a new bet",
+        "tags": ["bet"]
+      },
+      "get": {
+        "operationId": "getBets",
+        "parameters": [
+          {
+            "name": "competitorMail",
+            "in": "query",
+            "required": true,
+            "description": "email of competitor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "creatorMail",
+            "in": "query",
+            "required": true,
+            "description": "email of creator",
+            "schema": {
+              "type": "string"
+            }
+          },
+           {
+            "name": "competitorId",
+            "in": "query",
+            "required": true,
+            "description": "id of competitor",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "creatorId",
+            "in": "query",
+            "required": true,
+            "description": "email of creator",
+            "schema": {
+              "type": "string"
+            }
+          }    
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/bet"
+                  }
+                }
+              }
+            },
+            "description": "List of bets"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "x-amazon-apigateway-integration": ${fetchBetsBinding},
+        "summary": "fetch a filtered list of bets",
+        "tags": ["bet"]
+      },
+      "options": {
+        "summary": "CORS support",
+        "description": "Enable CORS by returning correct headers\n",
+        "tags": [
+          "CORS"
+        ],
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {}
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "requestTemplates": {
+            "application/json": "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "application/json": "{}\n"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bet/{betId}": {
+      "delete": {
+        "operationId": "deletebet",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/betId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Success"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "x-amazon-apigateway-integration": ${deleteBetBinding},
+        "summary": "deletes a bet by ID",
+        "tags": ["bet"]
+      },
+      "get": {
+        "operationId": "fetchBet",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/betId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/BetSuccess"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "x-amazon-apigateway-integration": ${fetchBetBinding},
+        "summary": "fetches a bet by ID",
+        "tags": ["bet"]
+      },
+      "put": {
+        "operationId": "updateBet",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/betId"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/bet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/BetSuccess"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        },
+        "x-amazon-apigateway-integration": ${updateBetBinding},
+        "summary": "updates a bet by ID",
+        "tags": ["bet"]
+      },
+      "options": {
+        "summary": "CORS support",
+        "description": "Enable CORS by returning correct headers\n",
+        "tags": [
+          "CORS"
+        ],
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {}
+          }
+        },
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "requestTemplates": {
+            "application/json": "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseParameters": {
+                "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                "method.response.header.Access-Control-Allow-Methods": "'*'",
+                "method.response.header.Access-Control-Allow-Origin": "'*'"
+              },
+              "responseTemplates": {
+                "application/json": "{}\n"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://api.project44.mayflower.cloud"
+    }
+  ],
+  "tags": [
+    {
+      "description": "Everything about your bets",
+      "name": "bet"
+    }
+  ]
+}

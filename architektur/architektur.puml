@@ -1,0 +1,38 @@
+@startuml archiktektur
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+!define DEVICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v11.1/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/NetworkingContentDelivery/CloudFront.puml
+!include AWSPuml/Storage/SimpleStorageServiceS3Standard.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/ApplicationIntegration/APIGateway.puml
+!include AWSPuml/SecurityIdentityCompliance/Cognito.puml
+!include AWSPuml/Database/DynamoDB.puml
+!include AWSPuml/BusinessApplications/SimpleEmailService.puml
+
+LAYOUT_WITH_LEGEND()
+
+Person(person, "User", "")
+System(browser,"Browser","React Frontend")
+Boundary(aws,"AWS") {
+    System_Ext(s3, "s3", $sprite="SimpleStorageServiceS3Standard")
+    System_Ext(cloudfront, "Cloud Front",$sprite="CloudFront")
+    ' System_Ext(cognito, "Cognito",$sprite="Cognito")
+    System_Ext(api_gateway, "Api Gateway",$sprite="APIGateway")
+    System(lambda,"CRUD Lambdas",$sprite="Lambda")
+    SystemDb_Ext(dynamodb,"Dynamo DB",$sprite="DynamoDB")
+    System_Ext(ses, " Simple Email Service",$sprite="SimpleEmailService")
+
+    Rel(person, browser, "uses")
+    ' Rel(browser, cognito, "Signup/Login","auth.project44.mayflower.cloud")
+    ' sRel(api_gateway, cognito , "Auth")
+    Rel(browser, api_gateway, "uses","api.project44.mayflower.cloud")
+    Rel(api_gateway, lambda, "uses")
+    Rel(lambda, dynamodb, "uses")
+    Rel(lambda, ses, "uses")
+    Rel(ses, person, "email")
+    Rel(browser, cloudfront, "uses","project44.mayflower.cloud")
+    Rel(cloudfront, s3, "uses")
+}
+@enduml
