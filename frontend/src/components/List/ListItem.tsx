@@ -9,8 +9,6 @@ interface ListItemProps {
 }
 
 export default function ListItem({ bet }: ListItemProps) {
-  moment.locale("de");
-
   return (
     <Grid item xs={12} sm={6} md={4}>
       <Card>

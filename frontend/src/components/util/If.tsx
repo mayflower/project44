@@ -1,9 +1,11 @@
+type IfType =  {
+  condition: boolean;
+  children: any;
+};
+
 export default function If({
   condition,
   children,
-}: {
-  condition: boolean;
-  children: any;
-}) {
+}: IfType) {
   return condition ? children : null;
 }

@@ -5,13 +5,18 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import List from "./components/List";
+import List from "./components/List/List";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import moment from "moment";
+import moment from 'moment';
+import "moment/locale/de";
+import Axios from 'axios';
 
+const API_URL = 'https://api.project44.mayflower.tech';
+export const axiosInstance = Axios.create({baseURL: API_URL})
 const queryClient = new QueryClient();
 
+moment.locale("de");
 function App() {
   return (
     <div className="App">
