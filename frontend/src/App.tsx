@@ -8,6 +8,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 function App() {
 
+  const bet = {
+    title: "FC Bayern vs. Kickers"
+  }
+
   return (
     <div className="App">
         <LocalizationProvider dateAdapter={AdapterMoment}>
