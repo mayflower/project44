@@ -1,8 +1,9 @@
-import json
 import boto3
-import json
 from boto3.dynamodb.types import TypeSerializer
 from marshmallow_dataclass import dataclass
+from decimal import Decimal
+import uuid
+import simplejson as json
 
 # import requests
 
@@ -39,19 +40,53 @@ def lambda_handler(event, context):
 
     client = boto3.client('dynamodb',endpoint_url='http://localstack:4566')
     serializer = TypeSerializer()
+    
+    @dataclass
+    class User:
+        userId: str
+        nickname: str
+        mail: str
+
+    @dataclass
+    class CriteriaOption:
+        title: str
+        description: str
+        probability: Decimal
+
+    @dataclass
+    class Competitor:
+        userId: str
+        nickname: str
+        mail: str
+        wager: int
+        criteriaIndex: int
 
     @dataclass
     class Bet:
-        Foo: str
+        title: str
+        description: str
+        criteria: list[CriteriaOption]
+        expirationTime: str
+        creator: User
+        minimumWager: Decimal
+        gain: Decimal
+        competitors: list[Competitor]
         PK: str
         SK: str
 
-
-    item = json.loads(event["body"])
-    item.update({'PK':'123', 'SK': '123'})
+    betId = f"bet#${str(uuid.uuid4())}"
+    item = json.loads(event["body"], parse_float=Decimal)
+    print(item)
+    creator = item["creator"]
+    creatorId = f"user#${uuid.uuid5(uuid.NAMESPACE_URL, creator['mail'])}"
+    creator.update({'userId': creatorId})
+    item.update({'PK': betId, 'SK': betId, 'creator': creator})
+    for competitor in item["competitors"]:
+        competitorId = f"user#${uuid.uuid5(uuid.NAMESPACE_URL, competitor['mail'])}"
+        competitor['userId'] = competitorId
     serializedItem = {k: serializer.serialize(v) for k,v in Bet.Schema().dump(item).items() if v != ""}
     client.put_item(TableName='Bets', Item=serializedItem)
     return {
         "statusCode": 200,
-        "body": {'success':'OK'},
+        "body": json.dumps(item,use_decimal=True),
     }
