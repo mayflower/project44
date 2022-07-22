@@ -1,34 +1,44 @@
 import React from "react";
 import { Card, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import { AccessAlarm, AccessTime, Euro, Groups } from "@mui/icons-material";
+import { Bet } from "./List";
+import moment from "moment";
 
-export default function ListItem() {
-  const arrayOfObjects = [
-    {
-      text: "2 Tage",
-      icon: <AccessTime />,
-    },
-    {
-      text: "10",
-      icon: <Euro />,
-    },
-    {
-      text: "2",
-      icon: <Groups />,
-    },
-  ];
+interface ListItemProps {
+  bet: Bet;
+}
+
+export default function ListItem({ bet }: ListItemProps) {
+  moment.locale("de");
+
   return (
-    <Grid item lg={4}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card>
-        <CardHeader title="Card Header" avatar={<AccessAlarm />} />
+        <CardHeader
+          title={bet.title}
+          avatar={<AccessAlarm />}
+          titleTypographyProps={{ variant: "h5" }}
+        />
         <CardContent>
           <Grid container justifyContent={"space-between"}>
-            {arrayOfObjects.map(({ text, icon }) => (
-              <Grid item sx={{ display: "flex" }}>
-                {icon}
-                <Typography sx={{ marginLeft: "10px" }}>{text}</Typography>
-              </Grid>
-            ))}
+            <Grid item sx={{ display: "flex" }}>
+              <AccessTime />
+              <Typography sx={{ marginLeft: "10px" }}>
+                {moment(bet.expirationTime, "DD").fromNow()}
+              </Typography>
+            </Grid>
+            <Grid item sx={{ display: "flex" }}>
+              <Euro />
+              <Typography sx={{ marginLeft: "10px" }}>
+                {bet.minimumWager}
+              </Typography>
+            </Grid>
+            <Grid item sx={{ display: "flex" }}>
+              <Groups />
+              <Typography sx={{ marginLeft: "10px" }}>
+                {bet.competitors.length}
+              </Typography>
+            </Grid>
           </Grid>
         </CardContent>
       </Card>
