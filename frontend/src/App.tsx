@@ -110,7 +110,7 @@ function App() {
                       </Grid>
                       {bet.options.map(opt => {
                         return (<Grid item xs={4}>
-                          <Card raised style={{cursor: "pointer"}} onClick={}>
+                          <Card raised style={{cursor: "pointer"}} onClick={() => console.log('hello')}>
                             <CardHeader sx={{color: "black"}} title={opt.name} />
                             <CardContent>
                               Anzahl Wetten: {opt.amountBet}<br />
