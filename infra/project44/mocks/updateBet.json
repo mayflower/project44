@@ -1,15 +1,19 @@
 {
-  "betId": "xxxx-xxx1",
-  "title": "My Bet",
-  "description": "Rainy tomorrow",
-  "criteria": ["Rainy Tomorrow"],
-  "expirationTime": "2022-05-23",
+  "betId": "xxxx-xxx3",
+  "title": "My Bet 3",
+  "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.",
+  "criteria": [
+    { "title": "Rainy Tomorrow", "description": "", "probability": 1 },
+    { "title": "sunny", "description": "", "probability": 0.5 },
+    { "title": "snowy", "description": "", "probability": 0.1 }
+  ],
+  "expirationTime": "2022-08-15",
   "creator": {
     "userId": "xxxx-x10",
     "nickname": "Xedon",
     "mail": "emanuel.vollmer@mayflower.de"
   },
-  "minimumWager": 100,
+  "minimumWager": 40,
   "isWagerSelectable": false,
   "isPublic": true,
   "competitors": [
@@ -17,19 +21,15 @@
       "userId": "xxxx-x13",
       "nickname": "Thomas",
       "mail": "thomas.schindler@mayflower.de",
-      "wager": 100
+      "wager": 40,
+      "criteriaIndex": 0
     },
     {
       "userId": "xxxx-x10",
       "nickname": "Xedon",
       "mail": "emanuel.vollmer@mayflower.de",
-      "wager": 100
-    },
-    {
-      "userId": "xxxx-x22",
-      "nickname": "Mare",
-      "mail": "maria.walzl@mayflower.de",
-      "wager": 100
+      "wager": 40,
+      "criteriaIndex": 1
     }
   ]
 }

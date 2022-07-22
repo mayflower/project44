@@ -3,61 +3,41 @@
 POST http://localhost:3000/bet/
 
 {
-  "title": "My Bet",
-  "description": "Rainy tomorrow",
+  "betId": "xxxx-xxx3",
+  "title": "My Bet 3",
+  "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.",
   "criteria": [
-    "Rainy tomorrow" 
+    { "title": "Rainy Tomorrow", "description": "", "probability": 1 },
+    { "title": "sunny", "description": "", "probability": 0.5 },
+    { "title": "snowy", "description": "", "probability": 0.1 }
   ],
-  "expirationTime": "2022-05-23",
+  "expirationTime": "2022-08-15",
   "creator": {
+    "userId": "xxxx-x10",
     "nickname": "Xedon",
     "mail": "emanuel.vollmer@mayflower.de"
   },
-  "minimumWager": 100,
+  "minimumWager": 40,
+  "isWagerSelectable": false,
   "isPublic": true,
   "competitors": [
-    { 
+    {
+      "userId": "xxxx-x13",
       "nickname": "Thomas",
       "mail": "thomas.schindler@mayflower.de",
-      "wager": 101
+      "wager": 40,
+      "criteriaIndex": 0
     },
     {
+      "userId": "xxxx-x10",
       "nickname": "Xedon",
       "mail": "emanuel.vollmer@mayflower.de",
-      "wager": 101
+      "wager": 40,
+      "criteriaIndex": 1
     }
   ]
 }
 
-### Bet sunny tomorrow
-
-POST http://localhost:3000/bet/
-
-{
-  "description": "Sunny tomorrow",
-  "criteria": [
-    "Sunny tomorrow" 
-  ],
-  "expirationTime": "2022-05-23",
-  "creator": {
-      "nickname": "Thomas",
-      "mail": "thomas.schindler@mayflower.de"
-  },
-  "minimumWager": 100,
-  "isPublic": true,
-  "competitors": [
-    {
-      "nickname": "Thomas",
-      "mail": "thomas.schindler@mayflower.de",
-      "wager": 101
-    },
-    {
-      "nickname": "Xedon",
-      "mail": "emanuel.vollmer@mayflower.de",
-      "wager": 101
-    }
-  ]
-}
 
 ### Get Bet
 GET http://localhost:3000/bet/a32508ac-04ec-5a44-83fd-4282b064909b
@@ -101,21 +81,27 @@ PUT http://localhost:3000/bet/a32508ac-04ec-5a44-83fd-4282b064909b
       "wager": 101,
       "mail": "thomas.schindler@mayflower.de",
       "userId": "8b2662d9-4f3e-5f7a-b744-b650a86a244e"
+
+      "criteriaIndex": 1
     },
     {
       "nickname": "Xedon",
       "wager": 101,
       "mail": "emanuel.vollmer@mayflower.de",
       "userId": "a7eba72b-0f06-5eeb-a114-3f68d8425abd"
+
+      "criteriaIndex": 1
     },
     {
       "nickname": "Pati",
       "wager": 101,
       "mail": "patrick.shaikh@mayflower.de"
+
+      "criteriaIndex": 1
     }
   ],
   "criteria": [
-    "Rainy tomorrow" 
+    { "title": "sunny", "description": "", "probability": 0.5 },
   ],
   "expirationTime": "2022-05-23",
   "betId": "a32508ac-04ec-5a44-83fd-4282b064909b",

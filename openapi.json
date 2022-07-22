@@ -66,6 +66,9 @@
             "properties": {
               "wager": {
                 "type": "integer"
+              },
+              "criteriaIndex":{
+                "type": "integer"
               }
             }
           }
@@ -93,13 +96,17 @@
       "criteriaOption": {
         "type": "object",
         "properties": {
-          "criteriaTitle": {
+          "title": {
             "description": "title of the criteria",
             "type": "string"
           },
-          "criteriaDescription": {
+          "description": {
             "description": "description of the criteria",
             "type": "string"
+          },
+          "probability":{
+            "description": "description of the criteria",
+            "type": "number"
           }
         }
       },
