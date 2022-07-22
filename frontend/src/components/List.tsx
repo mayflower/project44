@@ -2,11 +2,11 @@ import { Grid, Typography } from "@mui/material";
 import React from "react";
 import ListItem from "./ListItem";
 
-import url from "../api.json";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import If from "./If";
 
-const bets: Bet[] = [
+const bets2: Bet[] = [
   {
     betId: "1",
     title: "My Bet",
@@ -127,21 +127,28 @@ export interface Bet {
 }
 
 export default function List() {
-  /*const { data } = useQuery<Bet[]>(["bets"], async () => {
-    return await axios.get<Bet[]>(url.dummyUrl);
+  const { data: bets, isLoading } = useQuery(["bets"], async () => {
+    const response = await axios.get("/test/bet");
+    return response.data;
   });
 
-  console.log(data);*/
   return (
     <>
       <Typography variant={"h4"} fontWeight={"600"} sx={{ mb: "20px" }}>
         Vorhandene Wetten
       </Typography>
-      <Grid container spacing={2}>
-        {bets.map((bet) => (
-          <ListItem bet={bet} />
-        ))}
-      </Grid>
+      <If condition={!isLoading && bets.length !== 0 && bets}>
+        <Grid container spacing={2}>
+          {bets.map((bet: any) => (
+            <ListItem bet={bet} key={bet.betId} />
+          ))}
+        </Grid>
+      </If>
+      <If condition={isLoading || bets.length === 0}>
+        <Typography variant={"h4"} fontWeight={"600"} sx={{ mb: "20px" }}>
+          Laden...
+        </Typography>
+      </If>
     </>
   );
 }
