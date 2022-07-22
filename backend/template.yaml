@@ -34,9 +34,9 @@ Resources:
   createBet:
     Type: "AWS::Serverless::Function"
     Properties:
-      Runtime: nodejs16.x
-      Handler: index.handler
-      CodeUri: ./createBet/build
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      CodeUri: ./createBet
       MemorySize: 128
       Timeout: 300
       Description: 'Lambda to create new bets'
