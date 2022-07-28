@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+    - id: trailing-whitespace
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.17
+    hooks:
+      - id: tflint
+        args:
+          - "--module"
+          - "--color"
+          - "--config=.tflint.hcl"
+      - id: terraform-fmt
+  - repo: https://github.com/bridgecrewio/checkov.git
+    rev: 2.1.81
+    hooks:
+    - id: checkov
+      verbose: true
+      args:
+      - "--config-file=checkov.yaml"

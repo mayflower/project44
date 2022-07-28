@@ -1,0 +1,19 @@
+branch: master
+check:
+  - HIGH
+compact: true
+download-external-modules: true
+evaluate-variables: true
+external-modules-download-path: .external_modules
+framework:
+  - terraform_plan
+  - terraform
+  - yaml
+  - json
+  - github_configuration
+  - github_actions
+  - openapi
+  - secrets
+  - serverless
+quiet: true
+soft-fail: true
